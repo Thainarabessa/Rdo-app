@@ -1,170 +1,76 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RDO - Relatório Diário de Obra</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#003366" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f8f9fa;
-    }
-    h1 {
-      text-align: center;
-      color: #003366;
-    }
-    section {
-      margin-bottom: 30px;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 8px;
-    }
-    summary {
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
-      color: #002244;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: normal;
-    }
-    input[type="text"], input[type="number"], select, textarea {
-      width: 100%;
-      padding: 6px;
-      margin-top: 4px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
-</head>
-<body>
-  <h1>RDO - Relatório Diário de Obra</h1>
-  <form id="rdoForm">
-    <section>
-      <label>Data do preenchimento:
-        <input type="date" name="data" required />
-      </label>
-      <label>Responsável pelo preenchimento:
-        <select name="responsavel" required>
-          <option value="">Selecione</option>
-          <option>Thainara</option>
-          <option>Orlando</option>
-          <option>Dione</option>
-          <option>Guilherme Ferreira</option>
-          <option>Jhonatan</option>
-          <option>João Gabriel</option>
-          <option>Maxwell</option>
-          <option>Pedro</option>
-          <option>Gustavo Luís</option>
-          <option>Gustavo Ferreira</option>
-        </select>
-      </label>
-      <label>Obra:
-        <select name="obra" required>
-          <option value="NOVA ROMA">NOVA ROMA</option>
-        </select>
-      </label>
-      <label>Situação do tempo:
-        <select name="tempo" required>
-          <option>Sol</option>
-          <option>Chuva</option>
-          <option>Nublado</option>
-          <option>Impraticável</option>
-        </select>
-      </label>
-    </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tarefas = [
+  "LIMPEZA DO TERRENO",
+  "MONTAGEM DO CANTEIRO",
+  "MARCAÇÃO DA OBRA",
+  "CAIXA D'GUA E PERFURAÇÃO DO POÇO",
+  "ESCAVAÇÃO DOS PILARES",
+  "CONCRETAGEM DOS PILARES",
+  "CONCRETAGEM SAPATA DOS PILARES",
+  "ESCAVAÇÃO DE VALAS",
+  "MALHA DE ATERRAMENTO",
+  "HIDRÁULICA DA OBRA",
+  "PASSAGEM DE ELETRODUTOS",
+  "CAIXA DE PASSAGEM",
+  "FECHAMENTO DAS VALAS E NIVELAMENTO DO TERRENO",
+  "MONTAGEM DA ESTRUTURA",
+  "POSTES ALAMBRADO",
+  "TELA ALAMBRADO",
+  "CONSTRUÇÃO CIVIL ABRIGO 1",
+  "CONSTRUÇÃO CIVIL ABRIGO 2",
+  "CONSTRUÇÃO CIVIL ABRIGO 3",
+  "CONSTRUÇÃO  BASE DO TRANSFORMADOR 1",
+  "CONSTRUÇÃO  BASE DO TRANSFORMADOR 2",
+  "CONSTRUÇÃO  BASE DO TRANSFORMADOR 3",
+  "CONSTRUÇÃO  ALAMBRADO DO TRANSFORMADOR 1",
+  "CONSTRUÇÃO  ALAMBRADO DO TRANSFORMADOR 2",
+  "CONSTRUÇÃO  ALAMBRADO DO TRANSFORMADOR 3",
+  "CHEGADA DOS TRANSFORMADORES (3x1.750 kVA)",
+  "DESCARGA DO TRANSFORMADOR NA BASE",
+  "LEVANTAMENTO DE MATERIAL SEGUNDA ETAPA",
+  "COMPRA DO MATERIAL SEGUNDA ETAPA",
+  "CHEGADA DO MATERIAL DA SEGUNDA ETAPA",
+  "MARCAÇÃO E EXECUÇÃO DA MALHA DE ATERRAMENTO",
+  "CONSTRUÇÃO CIVIL DA CABINE",
+  "PASSAGEM DOS CABOS CA - MT",
+  "CONSTRUÇÃO ELETROMECÂNICA (CHAVES, ELETRODUTOS)",
+  "FECHAMENTO DOS CABOS CA - MT (MUFLAS)",
+  "INSTALAÇÕES ELÉTRICAS DA CABINE",
+  "ENERGIZAÇÃO DA CABINE (DEPENDE DA CONEXÃO DA EQUATORIAL)",
+  "COMISSIONAMENTO CABINE PRIMÁRIA",
+  "CHEGADA DOS MÓDULOS FV",
+  "DESCARGA DOS MÓDULOS E DISTRIBUIÇÃO NA OBRA",
+  "INSTALAÇÃO DOS MÓDULOS SOBRE A ESTRUTURA",
+  "FECHAMENTO DOS MÓDULOS E ACABAMENTO",
+  "INSTALAÇÃO INVERSORES ABRIGO 1",
+  "INSTALAÇÃO INVERSORES ABRIGO 2",
+  "INSTALAÇÃO INVERSORES ABRIGO 3",
+  "PASSAGEM E FECHAMENTO DOS CABOS DE COMUNICAÇÃO INVERSOR/LOGGER",
+  "PASSAGEM DOS CABOS CA - BT",
+  "FECHAMENTO DOS CABOS CA - INVERSORES ABRIGO 1",
+  "FECHAMENTO DOS CABOS CA - INVERSORES ABRIGO 2",
+  "FECHAMENTO DOS CABOS CA - INVERSORES ABRIGO 3",
+  "FECHAMENTO DOS CABOS CA BT - QGBT E TRANSFORMADOR 1",
+  "FECHAMENTO DOS CABOS CA BT - QGBT E TRANSFORMADOR 2",
+  "FECHAMENTO DOS CABOS CA BT - QGBT E TRANSFORMADOR 3",
+  "PASSAGEM DOS CABOS CC",
+  "FECHAMENTO DOS CONECTORES MC4 DAS PLACAS (ABRIGO 1)",
+  "FECHAMENTO DOS CONECTORES MC4 DAS PLACAS (ABRIGO 2)",
+  "FECHAMENTO DOS CONECTORES MC4 DAS PLACAS (ABRIGO 3)",
+  "FECHAMENTO DOS CONECTORES MC4 DOS INVERSORES (ABRIGO 1)",
+  "FECHAMENTO DOS CONECTORES MC4 DOS INVERSORES (ABRIGO 2)",
+  "FECHAMENTO DOS CONECTORES MC4 DOS INVERSORES (ABRIGO 3)",
+  "COMISSIONAMENTO DA USINA FV",
+  "SOLICITAÇÃO DE VISTORIA"
+];
 
-    <section>
-      <details open>
-        <summary>Tarefas em andamento (%)</summary>
-        <div id="tarefas-andamento"></div>
-      </details>
-    </section>
+    const andamentoContainer = document.getElementById("tarefas-andamento");
+    const finalizadasContainer = document.getElementById("tarefas-finalizadas");
 
-    <section>
-      <details>
-        <summary>Tarefas finalizadas no dia</summary>
-        <div class="checkbox-group" id="tarefas-finalizadas"></div>
-      </details>
-    </section>
-
-    <section>
-      <details>
-        <summary>Ocorrências</summary>
-        <div class="checkbox-group">
-          <label><input type="checkbox" name="ocorrencias" value="Acidente de trabalho"/> Acidente de trabalho</label>
-          <label><input type="checkbox" name="ocorrencias" value="Equipamentos com defeito ou indisponíveis"/> Equipamentos com defeito ou indisponíveis</label>
-          <label><input type="checkbox" name="ocorrencias" value="Falta de mão de obra"/> Falta de mão de obra</label>
-          <label><input type="checkbox" name="ocorrencias" value="Falta de material"/> Falta de material</label>
-          <label><input type="checkbox" name="ocorrencias" value="Interferência com outras frentes de serviço"/> Interferência com outras frentes de serviço</label>
-          <label><input type="checkbox" name="ocorrencias" value="Material danificado/incorreto"/> Material danificado/incorreto</label>
-          <label><input type="checkbox" name="ocorrencias" value="Mudança no escopo da obra"/> Mudança no escopo da obra</label>
-          <label><input type="checkbox" name="ocorrencias" value="Necessidade de retrabalho ou correção de execução"/> Necessidade de retrabalho ou correção de execução</label>
-          <label><input type="checkbox" name="ocorrencias" value="Paralisação/atraso por interferência climática"/> Paralisação/atraso por interferência climática</label>
-          <label><input type="checkbox" name="ocorrencias" value="Outros"/> Outros</label>
-        </div>
-      </details>
-    </section>
-
-    <section>
-      <details>
-        <summary>Observações</summary>
-        <textarea name="observacoes" rows="4" placeholder="Digite observações adicionais..."></textarea>
-      </details>
-    </section>
-
-    <section>
-      <details>
-        <summary>Equipe na obra</summary>
-        <label><input type="checkbox" name="equipe" value="Engenheiros"/> Engenheiros <input type="number" min="0" name="engenheiros" /></label>
-        <label><input type="checkbox" name="equipe" value="Encarregados"/> Encarregados <input type="number" min="0" name="encarregados" /></label>
-        <label><input type="checkbox" name="equipe" value="Pedreiros"/> Pedreiros <input type="number" min="0" name="pedreiros" /></label>
-        <label><input type="checkbox" name="equipe" value="Ajudantes"/> Ajudantes <input type="number" min="0" name="ajudantes" /></label>
-        <label><input type="checkbox" name="equipe" value="Eletricistas"/> Eletricistas <input type="number" min="0" name="eletricistas" /></label>
-        <label><input type="checkbox" name="equipe" value="Terceirizados"/> Terceirizados <input type="number" min="0" name="terceirizados" /></label>
-      </details>
-    </section>
-
-    <button type="submit">Enviar</button>
-  </form>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const tarefas = [...Array.from({length: 63}, (_, i) => "Tarefa " + (i + 1))]; // exemplo reduzido
-      const andamentoContainer = document.getElementById("tarefas-andamento");
-      const finalizadasContainer = document.getElementById("tarefas-finalizadas");
-
-      tarefas.forEach(tarefa => {
-        andamentoContainer.innerHTML += `<label>${tarefa} <input type="number" name="andamento_${tarefa}" placeholder="%" min="0" max="100"></label>`;
-        finalizadasContainer.innerHTML += `<label><input type="checkbox" name="finalizada" value="${tarefa}"/> ${tarefa}</label>`;
-      });
+    tarefas.forEach(tarefa => {
+      andamentoContainer.innerHTML += `<label>${tarefa} <input type="number" name="andamento_${tarefa}" placeholder="%" min="0" max="100"></label>`;
+      finalizadasContainer.innerHTML += `<label><input type="checkbox" name="finalizada" value="${tarefa}"/> ${tarefa}</label>`;
     });
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('service-worker.js').then(
-          function (registration) {
-            console.log('ServiceWorker registrado com sucesso:', registration.scope);
-          },
-          function (err) {
-            console.log('ServiceWorker falhou:', err);
-          }
-        );
-      });
-    }
-  </script>
-</body>
-</html>
+  });
+</script>
