@@ -229,5 +229,47 @@
       });
     }
   </script>
+
+<script>
+  document.getElementById("rdoForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+      data: form.data.value,
+      responsavel: form.responsavel.value,
+      obra: form.obra.value,
+      tempo: form.tempo.value,
+      tarefasAndamento: Array.from(form.querySelectorAll("input[name^='andamento_']")).filter(i => i.value).map(i => i.name.replace("andamento_", "") + ": " + i.value + "%"),
+      tarefasFinalizadas: Array.from(form.querySelectorAll("input[name='finalizada']:checked")).map(i => i.value),
+      ocorrencias: Array.from(form.querySelectorAll("input[name='ocorrencias']:checked")).map(i => i.value),
+      observacoes: form.observacoes.value,
+      equipe: {
+        engenheiros: form.engenheiros?.value || 0,
+        encarregados: form.encarregados?.value || 0,
+        pedreiros: form.pedreiros?.value || 0,
+        ajudantes: form.ajudantes?.value || 0,
+        eletricistas: form.eletricistas?.value || 0,
+        terceirizados: form.terceirizados?.value || 0
+      }
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwsbF6YtJib0bPz-U3XYqnyBc2WDk5xozLR6RHz8uo-ig7l421rxiUo_Ue1MCxBwS4SlA/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(res => res.text())
+    .then(resp => {
+      alert("Dados enviados com sucesso!");
+      form.reset();
+    })
+    .catch(err => {
+      console.error("Erro ao enviar dados:", err);
+      alert("Erro ao enviar dados: " + err);
+    });
+  });
+</script>
+
 </body>
 </html>
