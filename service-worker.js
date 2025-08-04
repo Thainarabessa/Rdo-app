@@ -1,7 +1,25 @@
-self.addEventListener('install', (event) => {
-  console.log('Service Worker instalado');
+
+const CACHE_NAME = 'rdo-app-v1';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icone-192.png',
+  '/icone-512.png'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
+    })
+  );
 });
 
-self.addEventListener('fetch', function(event) {
-  // Você pode customizar isso para cache se quiser funcionamento offline
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
 });
